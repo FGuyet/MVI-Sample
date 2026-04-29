@@ -1,7 +1,9 @@
 package com.fguyet.sample.mvi.feature.items.mvi
 
+import androidx.lifecycle.viewModelScope
 import com.fguyet.sample.mvi.core.MviViewModel
 import com.fguyet.sample.mvi.factory.ItemFactory
+import kotlinx.coroutines.launch
 
 /**
  * MVI ViewModel for the items screen.
@@ -9,7 +11,7 @@ import com.fguyet.sample.mvi.factory.ItemFactory
 class ItemsMviViewModel() : MviViewModel<ItemsUiState, ItemsAction>(ItemsUiState()) {
     private val itemFactory = ItemFactory()
     override fun handle(action: ItemsAction) {
-        launch {
+        viewModelScope.launch {
             when (action) {
                 is ItemsAction.AddItem -> addItem(action.name)
                 is ItemsAction.DeleteItem -> deleteItem(action.id)
