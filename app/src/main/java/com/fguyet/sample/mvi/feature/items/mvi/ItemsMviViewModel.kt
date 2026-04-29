@@ -3,6 +3,7 @@ package com.fguyet.sample.mvi.feature.items.mvi
 import androidx.lifecycle.viewModelScope
 import com.fguyet.sample.mvi.core.MviViewModel
 import com.fguyet.sample.mvi.factory.ItemFactory
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 
 /**
@@ -29,7 +30,7 @@ class ItemsMviViewModel(
             updateState { copy(errorMessage = "Name cannot be empty.") }
             return
         }
-        updateState { copy(items = items + itemFactory.create(trimmed)) }
+        updateState { copy(items = items.add(itemFactory.create(trimmed))) }
     }
 
     private suspend fun deleteItem(id: String) {
@@ -37,11 +38,11 @@ class ItemsMviViewModel(
             if (items.none { it.id == id }) {
                 copy(errorMessage = "Item not found.")
             } else {
-                copy(items = items.filterNot { it.id == id }, deletionSuccess = true)
+                copy(
+                    items = items.filter { it.id != id }.toPersistentList(),
+                    deletionSuccess = true
+                )
             }
         }
-        updateState { copy(items = items.filterNot { it.id == id }, deletionSuccess = true) }
     }
 }
-
-

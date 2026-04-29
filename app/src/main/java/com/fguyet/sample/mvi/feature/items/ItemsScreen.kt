@@ -32,6 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fguyet.sample.mvi.model.Item
 import com.fguyet.sample.mvi.ui.theme.MyApplicationTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Shared items-list screen, used by both MVI and MVVM routes.
@@ -40,7 +42,7 @@ import com.fguyet.sample.mvi.ui.theme.MyApplicationTheme
 fun ItemsScreen(
     modifier: Modifier = Modifier,
     title: String,
-    items: List<Item>,
+    items: PersistentList<Item>,
     onAddItem: (String) -> Unit,
     onDeleteItem: (String) -> Unit
 ) {
@@ -130,7 +132,7 @@ private fun ItemsScreenPreview() {
     MyApplicationTheme {
         ItemsScreen(
             title = "Preview",
-            items = listOf(
+            items = persistentListOf(
                 Item(id = "1", name = "Item A"),
                 Item(id = "2", name = "Item B"),
             ),
