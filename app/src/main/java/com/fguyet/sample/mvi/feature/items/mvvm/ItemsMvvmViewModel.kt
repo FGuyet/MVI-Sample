@@ -11,10 +11,12 @@ import kotlinx.coroutines.flow.update
 /**
  * MVVM ViewModel for the items screen.
  */
-class ItemsMvvmViewModel : ViewModel() {
+class ItemsMvvmViewModel(
+    initialItems: List<Item> = emptyList()
+) : ViewModel() {
     private val itemFactory = ItemFactory()
 
-    private val _items = MutableStateFlow<List<Item>>(emptyList())
+    private val _items = MutableStateFlow(initialItems)
 
     val items: StateFlow<List<Item>> = _items.asStateFlow()
 

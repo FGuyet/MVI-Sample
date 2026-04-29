@@ -1,15 +1,10 @@
 package com.fguyet.sample.mvi.core
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Base class for MVI ViewModels.
@@ -36,12 +31,6 @@ abstract class MviViewModel<State, Action>(initialState: State) : ViewModel() {
 
     /** Single entry point for all UI actions. */
     abstract fun handle(action: Action)
-
-    /** Helper to launch a coroutine in [viewModelScope] with [Dispatchers.Default] by default */
-    protected fun launch(
-        context: CoroutineContext = Dispatchers.Default,
-        block: suspend CoroutineScope.() -> Unit
-    ) = viewModelScope.launch(context = context, block = block)
 }
 
 
