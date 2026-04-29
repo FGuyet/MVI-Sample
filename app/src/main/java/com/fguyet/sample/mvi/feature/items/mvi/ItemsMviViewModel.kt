@@ -8,7 +8,9 @@ import kotlinx.coroutines.launch
 /**
  * MVI ViewModel for the items screen.
  */
-class ItemsMviViewModel() : MviViewModel<ItemsUiState, ItemsAction>(ItemsUiState()) {
+class ItemsMviViewModel(
+    initialState: ItemsUiState = ItemsUiState()
+) : MviViewModel<ItemsUiState, ItemsAction>(initialState) {
     private val itemFactory = ItemFactory()
     override fun handle(action: ItemsAction) {
         viewModelScope.launch {
