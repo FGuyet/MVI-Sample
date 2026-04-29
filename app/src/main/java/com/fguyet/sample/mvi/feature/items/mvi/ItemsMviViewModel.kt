@@ -38,6 +38,7 @@ class ItemsMviViewModel() : MviViewModel<ItemsUiState, ItemsAction>(ItemsUiState
                 copy(items = items.filterNot { it.id == id }, deletionSuccess = true)
             }
         }
+        updateState { copy(items = items.filterNot { it.id == id }, deletionSuccess = true) }
     }
 }
 
