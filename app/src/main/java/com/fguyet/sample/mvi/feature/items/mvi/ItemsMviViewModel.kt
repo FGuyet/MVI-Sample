@@ -29,11 +29,13 @@ class ItemsMviViewModel() : MviViewModel<ItemsUiState, ItemsAction>(ItemsUiState
     }
 
     private suspend fun deleteItem(id: String) {
-        if (uiState.value.items.none { it.id == id }) {
-            updateState { copy(errorMessage = "Item not found.") }
-            return
+        updateState {
+            if (items.none { it.id == id }) {
+                copy(errorMessage = "Item not found.")
+            } else {
+                copy(items = items.filterNot { it.id == id }, deletionSuccess = true)
+            }
         }
-        updateState { copy(items = items.filterNot { it.id == id }, deletionSuccess = true) }
     }
 }
 
