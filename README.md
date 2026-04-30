@@ -37,9 +37,9 @@ in the route composable via `ConsumeError` / `ConsumeDeletionSuccess` actions.
 
 ### MVVM pattern (`feature/items/mvvm`)
 
-| Concept   | Class                                                                |
-|-----------|----------------------------------------------------------------------|
-| State     | `StateFlow<List<Item>>` exposed directly from the ViewModel          |
+| Concept   | Class                                                                         |
+|-----------|-------------------------------------------------------------------------------|
+| State     | `StateFlow<ImmutableList<Item>>` exposed directly from the ViewModel          |
 | ViewModel | `ItemsMvvmViewModel` — plain `ViewModel`, methods return `Result<T>` |
 
 Add/delete results are returned as `Result<Item>` / `Result<String>` and handled imperatively by the
@@ -76,18 +76,23 @@ app/src/main/…
 
 Unit tests live in `app/src/test/` and follow the same structure as the source.
 
-Both test classes inject the initial `State` / `List<Item>` directly into the ViewModel constructor
-instead of calling methods to build up state, keeping each test focused on a **single action**.
+Both test classes inject the initial `State` / persistent item list directly into the ViewModel
+constructor instead of calling methods to build up state, keeping each test focused on a
+**single action**.
 
 ```kotlin
+import kotlinx.collections.immutable.persistentListOf
+
 // MVI — inject ItemsUiState
 viewModel = ItemsMviViewModel(
-    initialState = ItemsUiState(items = listOf(Item(id = "id-1", name = "ToDelete")))
+    initialState = ItemsUiState(
+        items = persistentListOf(Item(id = "id-1", name = "ToDelete"))
+    )
 )
 
 // MVVM — inject initial items list
 viewModel = ItemsMvvmViewModel(
-    initialItems = listOf(Item(id = "id-1", name = "ToDelete"))
+    initialItems = persistentListOf(Item(id = "id-1", name = "ToDelete"))
 )
 ```
 

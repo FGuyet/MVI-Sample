@@ -2,6 +2,7 @@ package com.fguyet.sample.mvi.feature.items.mvi
 
 import com.fguyet.sample.mvi.model.Item
 import com.fguyet.sample.mvi.util.MainDispatcherRule
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -110,7 +111,14 @@ class ItemsMviViewModelTest {
     @Test
     fun `DeleteItem removes the item with the matching id`() = runTest(mainDispatcherRule.testDispatcher) {
         viewModel = ItemsMviViewModel(
-            initialState = ItemsUiState(items = listOf(Item(id = "id-1", name = "ToDelete")))
+            initialState = ItemsUiState(
+                items = persistentListOf(
+                    Item(
+                        id = "id-1",
+                        name = "ToDelete"
+                    )
+                )
+            )
         )
 
         viewModel.handle(ItemsAction.DeleteItem("id-1"))
@@ -122,7 +130,14 @@ class ItemsMviViewModelTest {
     @Test
     fun `DeleteItem sets deletionSuccess to true on success`() = runTest(mainDispatcherRule.testDispatcher) {
         viewModel = ItemsMviViewModel(
-            initialState = ItemsUiState(items = listOf(Item(id = "id-1", name = "ToDelete")))
+            initialState = ItemsUiState(
+                items = persistentListOf(
+                    Item(
+                        id = "id-1",
+                        name = "ToDelete"
+                    )
+                )
+            )
         )
 
         viewModel.handle(ItemsAction.DeleteItem("id-1"))
@@ -142,7 +157,7 @@ class ItemsMviViewModelTest {
     @Test
     fun `DeleteItem with unknown id does not change items list`() = runTest(mainDispatcherRule.testDispatcher) {
         viewModel = ItemsMviViewModel(
-            initialState = ItemsUiState(items = listOf(Item(id = "id-1", name = "Safe")))
+            initialState = ItemsUiState(items = persistentListOf(Item(id = "id-1", name = "Safe")))
         )
 
         viewModel.handle(ItemsAction.DeleteItem("non-existent-id"))
@@ -155,7 +170,7 @@ class ItemsMviViewModelTest {
     fun `DeleteItem only removes the targeted item`() = runTest(mainDispatcherRule.testDispatcher) {
         viewModel = ItemsMviViewModel(
             initialState = ItemsUiState(
-                items = listOf(
+                items = persistentListOf(
                     Item(id = "id-keep", name = "Keep"),
                     Item(id = "id-remove", name = "Remove")
                 )

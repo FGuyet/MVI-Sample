@@ -1,6 +1,7 @@
 package com.fguyet.sample.mvi.feature.items.mvvm
 
 import com.fguyet.sample.mvi.model.Item
+import kotlinx.collections.immutable.persistentListOf
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
@@ -108,7 +109,14 @@ class ItemsMvvmViewModelTest {
 
     @Test
     fun `deleteItem with existing id returns success`() {
-        viewModel = ItemsMvvmViewModel(initialItems = listOf(Item(id = "id-1", name = "ToDelete")))
+        viewModel = ItemsMvvmViewModel(
+            initialItems = persistentListOf(
+                Item(
+                    id = "id-1",
+                    name = "ToDelete"
+                )
+            )
+        )
 
         val result = viewModel.deleteItem("id-1")
 
@@ -117,7 +125,14 @@ class ItemsMvvmViewModelTest {
 
     @Test
     fun `deleteItem removes the item from the list`() {
-        viewModel = ItemsMvvmViewModel(initialItems = listOf(Item(id = "id-1", name = "ToDelete")))
+        viewModel = ItemsMvvmViewModel(
+            initialItems = persistentListOf(
+                Item(
+                    id = "id-1",
+                    name = "ToDelete"
+                )
+            )
+        )
 
         viewModel.deleteItem("id-1")
 
@@ -126,7 +141,14 @@ class ItemsMvvmViewModelTest {
 
     @Test
     fun `deleteItem returns the deleted id on success`() {
-        viewModel = ItemsMvvmViewModel(initialItems = listOf(Item(id = "id-1", name = "ToDelete")))
+        viewModel = ItemsMvvmViewModel(
+            initialItems = persistentListOf(
+                Item(
+                    id = "id-1",
+                    name = "ToDelete"
+                )
+            )
+        )
 
         val result = viewModel.deleteItem("id-1")
 
@@ -142,7 +164,8 @@ class ItemsMvvmViewModelTest {
 
     @Test
     fun `deleteItem with unknown id does not change the list`() {
-        viewModel = ItemsMvvmViewModel(initialItems = listOf(Item(id = "id-1", name = "Safe")))
+        viewModel =
+            ItemsMvvmViewModel(initialItems = persistentListOf(Item(id = "id-1", name = "Safe")))
 
         viewModel.deleteItem("non-existent-id")
 
@@ -159,7 +182,7 @@ class ItemsMvvmViewModelTest {
     @Test
     fun `deleteItem only removes the targeted item`() {
         viewModel = ItemsMvvmViewModel(
-            initialItems = listOf(
+            initialItems = persistentListOf(
                 Item(id = "id-keep", name = "Keep"),
                 Item(id = "id-remove", name = "Remove")
             )
