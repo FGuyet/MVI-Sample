@@ -3,25 +3,24 @@ package com.fguyet.sample.mvi.feature.items.mvvm
 import androidx.lifecycle.ViewModel
 import com.fguyet.sample.mvi.factory.ItemFactory
 import com.fguyet.sample.mvi.model.Item
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 /**
  * MVVM ViewModel for the items screen.
  */
 class ItemsMvvmViewModel(
-    initialItems: PersistentList<Item> = persistentListOf()
+    initialItems: List<Item> = emptyList()
 ) : ViewModel() {
     private val itemFactory = ItemFactory()
 
-    private val _items = MutableStateFlow(initialItems)
+    private val _items: MutableStateFlow<PersistentList<Item>> = MutableStateFlow(initialItems.toPersistentList())
 
-    val items: StateFlow<PersistentList<Item>> = _items.asStateFlow()
+    val items: StateFlow<ImmutableList<Item>> = _items
 
     /** Adds an item. Returns the created [Item] on success, or a failure with an error message. */
     fun addItem(name: String): Result<Item> {

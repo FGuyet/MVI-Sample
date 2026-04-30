@@ -6,6 +6,7 @@ import com.fguyet.sample.mvi.factory.ItemFactory
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 
+
 /**
  * MVI ViewModel for the items screen.
  */
@@ -30,7 +31,7 @@ class ItemsMviViewModel(
             updateState { copy(errorMessage = "Name cannot be empty.") }
             return
         }
-        updateState { copy(items = items.add(itemFactory.create(trimmed))) }
+        updateState { copy(items = items.toPersistentList().add(itemFactory.create(trimmed))) }
     }
 
     private suspend fun deleteItem(id: String) {

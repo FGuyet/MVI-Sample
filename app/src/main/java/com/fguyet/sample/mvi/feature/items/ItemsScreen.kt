@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fguyet.sample.mvi.model.Item
 import com.fguyet.sample.mvi.ui.theme.MyApplicationTheme
-import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 /**
@@ -42,7 +42,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun ItemsScreen(
     modifier: Modifier = Modifier,
     title: String,
-    items: PersistentList<Item>,
+    items: ImmutableList<Item>,
     onAddItem: (String) -> Unit,
     onDeleteItem: (String) -> Unit
 ) {
